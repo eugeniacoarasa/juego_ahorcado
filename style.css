@@ -1,0 +1,542 @@
+:root {
+    --india-green: #36831A;
+    --lime-yellow: #DBF438;
+    --ash-grey: #C0D4C5;
+    --frosted-blue: #C0EEFE;
+    --periwinkle: #B5B0E3;
+
+    --primary: var(--lime-yellow);
+    --accent: var(--frosted-blue);
+    --bg-dark: var(--india-green);
+    --panel-bg: rgba(181, 176, 227, 0.92);
+    --panel-dark-bg: rgba(54, 131, 26, 0.9);
+    --text-main: #1b2e1f;
+    --text-light: #ffffff;
+    --text-muted: #3a4f3d;
+    --danger: #d9534f;
+    --success: #2e7d32;
+    --warning: #fbc02d;
+    --glow: 0 0 14px rgba(219, 244, 56, 0.6);
+    --neon-purple: #8f42dc;
+    
+    --font-main: 'Fredoka', sans-serif;
+    --font-secondary: 'Quicksand', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-secondary);
+}
+
+h1, h2, h3, .primary-btn, .option-btn, .key-btn, .tool-btn {
+    font-family: var(--font-main);
+}
+
+html, body {
+    width: 100vw;
+    height: 100dvh;
+    overflow: hidden;
+    background: url('images/portada.jpg') no-repeat center center / cover;
+}
+
+.game-container {
+    width: 100vw;
+    height: 100dvh;
+    position: relative;
+    overflow: hidden;
+}
+
+.screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+}
+
+.screen.hidden {
+    display: none !important;
+}
+
+.start-bg, .game-bg { 
+  background: url('images/portada.jpg') no-repeat center center / cover;
+}
+.game-bg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+}
+
+.game-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 780px;
+    height: 96dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.game-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Caja de vidas equipada con estilo Neón similar al de herramientas */
+.stats-bar {
+    display: flex;
+    gap: 16px;
+    background: var(--panel-bg);
+    padding: 8px 16px;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    border: 2px solid var(--neon-purple);
+    align-items: center;
+    height: 44px;
+    box-shadow: 0 0 14px var(--neon-purple);
+}
+
+/* Sombra aplicada a los iconos de los emojis */
+.icon-shadow {
+    filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 10px #ffffff);
+}
+
+.game-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.danger-btn-sm {
+    background-color: rgba(217, 83, 79, 0.2);
+    color: var(--danger);
+    border: 2px solid var(--danger);
+    border-radius: 12px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.danger-btn-sm:hover {
+    background-color: rgba(217, 83, 79, 0.35);
+}
+
+.dropdown-wrapper {
+    position: relative;
+}
+
+.tool-icon-btn {
+    background-color: var(--lime-yellow);
+    color: var(--india-green);
+    border: 2px solid var(--india-green);
+    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3), var(--glow);
+    transition: background 0.2s, transform 0.1s;
+}
+
+.tool-icon-btn:hover {
+    background-color: #cbeb21;
+    transform: scale(1.05);
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background-color: var(--ash-grey);
+    border: 2px solid var(--periwinkle);
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    min-width: 190px;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.dropdown-menu.hidden {
+    display: none !important;
+}
+
+.dropdown-item {
+    background: transparent;
+    color: var(--text-main);
+    border: none;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 1px solid var(--periwinkle);
+    transition: background 0.2s;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background-color: var(--frosted-blue);
+    color: var(--india-green);
+}
+
+.game-main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    flex: 1;
+    padding: 8px 0;
+    gap: 8px;
+}
+
+.word-display {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: var(--panel-bg);
+    padding: 14px;
+    border-radius: 16px;
+    width: 100%;
+    border: 2px solid var(--neon-purple);
+    align-items: center;
+    box-shadow: 0 0 14px var(--neon-purple);
+}
+
+.letter-slot {
+    font-size: 1.9rem;
+    font-weight: 700;
+    width: 38px;
+    border-bottom: 5px solid var(--india-green);
+    text-align: center;
+    color: var(--text-main);
+    text-transform: uppercase;
+    font-family: var(--font-main);
+    padding: .5rem;
+    row-gap: 1rem;
+    margin-top: 1rem;
+}
+
+.hint-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    width: 100%;
+}
+
+.hint-box {
+    background: var(--panel-bg);
+    border: 2px dashed var(--neon-purple);
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    text-align: center;
+    color: var(--text-main);
+    font-weight: 600;
+    box-shadow: 0 0 14px var(--neon-purple);
+}
+
+.hint-box .lightbulb-icon, 
+.hint-box span:first-child,
+.hint-action-btn .lightbulb-icon {
+    filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 10px #ffffff);
+}
+
+.hint-action-btn {
+    background-color: rgba(251, 192, 45, 0.25);
+    color: #795548;
+    border: 2px solid var(--warning);
+    border-radius: 12px;
+    padding: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.3s, transform 0.2s;
+}
+
+.hint-action-btn:hover {
+    background-color: rgba(251, 192, 45, 0.4);
+}
+
+.hint-action-btn.pulse-neon {
+    animation: neonPulse 1.5s infinite ease-in-out;
+}
+
+@keyframes neonPulse {
+    0% {
+        box-shadow: 0 0 6px var(--neon-purple);
+        border-color: var(--neon-purple);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 22px var(--neon-purple), 0 0 38px var(--neon-purple);
+        border-color: #a855f7;
+        transform: scale(1.03);
+    }
+    100% {
+        box-shadow: 0 0 6px var(--neon-purple);
+        border-color: var(--neon-purple);
+        transform: scale(1);
+    }
+}
+
+@media (min-width: 768px) {
+    .hint-box {
+        font-size: 1.14rem;
+    }
+}
+
+.keyboard {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    background: var(--panel-bg);
+    padding: 12px;
+    border-radius: 16px;
+    width: 100%;
+    border: 2px solid var(--india-green);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.key-btn {
+    background-color: var(--frosted-blue);
+    color: var(--text-main);
+    border: 2px solid var(--neon-purple);
+    border-radius: 10px;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--neon-purple), inset 0 0 4px var(--neon-purple);
+    transition: transform 0.1s, background 0.2s, box-shadow 0.2s;
+}
+
+.key-btn:hover {
+    box-shadow: 0 0 15px var(--neon-purple), inset 0 0 6px var(--neon-purple);
+}
+
+.key-btn:active:not(:disabled) {
+    transform: scale(0.92);
+}
+
+.key-btn:disabled {
+    background-color: #d1d5db;
+    color: #9ca3af;
+    border: 2px solid #9ca3af;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.message-box {
+    text-align: center;
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-height: 24px;
+    width: 100%;
+    color: var(--text-light);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+}
+
+.primary-btn {
+    background-color: var(--lime-yellow);
+    color: var(--india-green);
+    border: 2px solid #bacc22;
+    border-radius: 14px;
+    padding: 12px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--glow);
+    text-align: center;
+    width: 100%;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.primary-btn:hover {
+    background-color: #cbeb21;
+}
+
+.primary-btn:active {
+    transform: scale(0.98);
+}
+
+.content-box {
+    position: relative;
+    z-index: 2;
+    background: var(--panel-bg);
+    backdrop-filter: blur(10px);
+    padding: 22px;
+    border-radius: 20px;
+    border: 2px solid var(--periwinkle);
+    width: 95%;
+    max-width: 580px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.main-title {
+    text-align: center;
+}
+
+.main-title h1 {
+    font-size: 2.1rem;
+    color: var(--india-green);
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+}
+
+.main-title p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.menu-tools-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.tool-btn {
+    background-color: var(--frosted-blue);
+    color: var(--text-main);
+    border: 2px solid var(--periwinkle);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.tool-btn:hover {
+    background-color: #a8e5fb;
+}
+
+.config-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.config-section h3 {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.btn-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+#mode-group {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.option-btn {
+    background-color: var(--ash-grey);
+    color: var(--text-muted);
+    border: 2px solid var(--periwinkle);
+    border-radius: 12px;
+    padding: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.option-btn.active {
+    background-color: var(--lime-yellow);
+    color: var(--india-green);
+    border-color: var(--india-green);
+    box-shadow: var(--glow);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 100;
+}
+
+.modal.hidden {
+    display: none !important;
+}
+
+.modal-content {
+    background-color: var(--ash-grey);
+    border: 2px solid var(--periwinkle);
+    border-radius: 20px;
+    padding: 26px;
+    max-width: 440px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.modal-content h2 {
+    color: var(--india-green);
+    font-size: 1.4rem;
+}
+
+.modal-content p, .modal-content ul {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    line-height: 1.5;
+    padding-left: 15px;
+    font-weight: 600;
+}
+
+/* Distribución vertical uniforme estricta en entorno PC manteniendo el alto */
+
+@media (min-width: 1024px) {
+    /* 1. Hacemos que el wrapper principal controle directamente a TODAS las cajas */
+    .game-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Reparte el espacio por igual entre todos los elementos */
+        height: 92vh;
+        max-height: 760px;
+    }
+
+    /* 2. Desactivamos el contenedor interno para que deje de interferir */
+    .game-main-content {
+        display: contents; /* Esto hace que las cajas hijas salten directamente a nivel del wrapper */
+    }
+}
