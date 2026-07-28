@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahorcado - Kids & Fun Edition</title>
-    
+
+    <!-- Fuentes de Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="manifest" href="manifest.json">    
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="game-container">
-        
-        <!-- PANTALLA DE INICIO -->
+
+        <!-- PANTALLA DE INICIO: Configuración de dificultad y modo -->
         <section id="start-screen" class="screen start-bg">
             <div class="content-box">
                 <header class="main-title">
@@ -22,12 +25,14 @@
                     <p>Kids & Fun Edition</p>
                 </header>
 
+                <!-- Botones de herramientas globales -->
                 <div class="menu-tools-top">
                     <button class="tool-btn" id="sound-toggle-start" onclick="toggleSound()">🔊 Sonido: ON</button>
                     <button class="tool-btn" id="fs-toggle-start" onclick="toggleFullscreen()">⛶ Pantalla</button>
                     <button class="tool-btn" onclick="openHelp()">❓ Ayuda</button>
                 </div>
 
+                <!-- Selección de nivel de dificultad -->
                 <div class="config-section">
                     <h3>Nivel de Dificultad</h3>
                     <div class="btn-group" id="level-group">
@@ -37,6 +42,7 @@
                     </div>
                 </div>
 
+                <!-- Selección de modo de juego -->
                 <div class="config-section">
                     <h3>Modo de Juego</h3>
                     <div class="btn-group" id="mode-group">
@@ -45,22 +51,25 @@
                     </div>
                 </div>
 
+                <!-- Botón de arranque -->
                 <button class="primary-btn start-game-btn" onclick="startGame()">🚀 Iniciar Partida</button>
 
-                <footer style="text-align: center; margin-top: 15px; color: #888; font-family: sans-serif; font-size: 0.85rem;">
-                    Creado con ❤️ por <a href="https://github.com/eugeniacoarasa" target="_blank" style="color: #00ff66; text-decoration: none;">Eugenia Coarasa</a>
+                <footer style="text-align: center; margin-top: 15px; color: #186e09; font-family: sans-serif; font-size: 0.85rem;">
+                    Creado con ❤️ por <a href="https://github.com/eugeniacoarasa" target="_blank" style="color: #e6f914; text-decoration: none;">Eugenia Coarasa</a>
                 </footer>
             </div>
         </section>
 
         <!-- PANTALLA DE JUEGO PRINCIPAL -->
         <section id="game-screen" class="screen game-bg hidden">
-            <div class="game-wrapper">                
+            <div class="game-wrapper">
+                
+                <!-- Barra superior: Vidas, temporizador y menú de opciones -->
                 <header class="game-top-bar">
                     <div class="stats-bar">
                         <span id="lives-display"><span class="icon-shadow">❤️</span> 6</span>
                         <span id="timer-display" class="hidden"><span class="icon-shadow">⏱️</span> 45s</span>
-                    </div>                    
+                    </div>
                     <div class="game-actions-right">
                         <button class="danger-btn-sm" onclick="quitGame()">🚪 Abandonar</button>
                         <div class="dropdown-wrapper">
@@ -73,18 +82,33 @@
                         </div>
                     </div>
                 </header>
+
+                <!-- Contenido central del juego -->
                 <div class="game-main-content">
-                    <div class="word-display" id="word-container"></div>
+                    
+                    <!-- Casilleros de la palabra secreta (Limpio de elementos de sello extra) -->
+                    <div class="word-display">
+                        <div id="word-container"></div>
+                    </div>
+
+                    <!-- Pistas -->
                     <div class="hint-container">
                         <div class="hint-box" id="hint-text">💡 Pista...</div>
                         <button class="hint-action-btn" id="hint-btn" onclick="useHint()">✨ Revelar Letra (-1 Vida)</button>
                     </div>
+
+                    <!-- Teclado virtual -->
                     <div class="keyboard" id="keyboard-container"></div>
+
+                    <!-- Caja de mensajes (Se convierte automáticamente en sello gracias al CSS :not(:empty)) -->
                     <div class="message-box" id="message-container"></div>
+
+                    <!-- Botón para pasar a la siguiente palabra -->
                     <button class="primary-btn" id="next-btn" onclick="initRound()" style="display: none;">Siguiente Palabra</button>
                 </div>
             </div>
         </section>
+
         <!-- MODAL DE AYUDA -->
         <div id="help-modal" class="modal hidden">
             <div class="modal-content">
@@ -99,17 +123,29 @@
                 <button class="primary-btn" onclick="closeHelp()">Entendido</button>
             </div>
         </div>
+
+        <!-- MODAL DE VICTORIA GENERAL (5 palabras completadas) -->
+        <div id="victory-modal" class="modal hidden">
+            <div class="confetti-container" id="confetti-container"></div>
+            <div class="modal-content victory-content">
+                <h2>🏆 ¡Felicitaciones!</h2>
+                <p>¡Has completado con éxito las 5 palabras de esta ronda!</p>
+                <button class="primary-btn" onclick="returnToStartFromVictory()">Siguiente Ronda</button>
+            </div>
+        </div>
+
     </div>
 
+    <!-- Script principal de la lógica del juego -->
     <script src="script.js"></script>
     <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
-                .then(reg => console.log('Service Worker registrado con éxito:', reg.scope))
-                .catch(err => console.log('Error al registrar el Service Worker:', err));
-        });
-    }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker registrado con éxito:', reg.scope))
+                    .catch(err => console.log('Error al registrar el Service Worker:', err));
+            });
+        }
     </script>
 </body>
 </html>

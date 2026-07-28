@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ahorcado-cache-v2';
+const CACHE_NAME = 'ahorcado-cache-v3.1.0';
 const urlsToCache = [
   './index.html',
   './style.css',
